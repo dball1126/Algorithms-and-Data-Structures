@@ -31,20 +31,20 @@ class Node {
 
 // TODO: Implement a Singly Linked List class here
 class LinkedList {
-    constructor(head, tail, length) {
-        this.head = head;
-        this.tail = tail;
-        this.length = length;
-        if(length === undefined){
-            length = 0;
-        }
-
+    constructor() {
+        this.head = null;
+        this.tail = null;
+        this.length = 0
+        
         // this.node = new Node;
     }
 
     // TODO: Implement the addToTail method here
     addToTail(val) {
 
+        while(val.next != null){
+            val = val.next;
+        }
     }
 
     // TODO: Implement the removeTail method here
@@ -54,7 +54,8 @@ class LinkedList {
 
     // TODO: Implement the addToHead method here
     addToHead(val) {
-
+        let node = new Node(val);
+        
     }
 
     // TODO: Implement the removeHead method here
@@ -89,8 +90,8 @@ class LinkedList {
 
     // TODO: Implement the size method here
     size() {
-
-       return this.length;
+        
+       
     }
 }
 
