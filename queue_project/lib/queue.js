@@ -63,6 +63,9 @@ class Queue {
         this.length--;
         return node.value;
     }
+    size(){
+        return this.length;
+    }
 }
 
 exports.Node = Node;
