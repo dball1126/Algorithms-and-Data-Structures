@@ -41,7 +41,7 @@
 // -----------
 function linkedListIntersection(list1, list2) {
   // TODO: Implement the hasCycle function!
-
+  
 }
 
 // ----------------------------------------
