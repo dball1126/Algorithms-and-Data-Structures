@@ -22,48 +22,47 @@
 
 class Node {
     constructor(val){
-        this.value = val;
-        this.next = null;
+       this.value = val;
+       this.next = null;
     }
 }
 
 class Stack {
     constructor(){
+        this.length = 0;
         this.top = null;
         this.bottom = null;
-        this.length = 0;
     }
 
     push(val){
-        let newNode = new Node(val);
-        if(!this.top){
-            this.top = newNode;
-            this.bottom = newNode;
+        let node = new Node(val);
+        this.length++;
+        if (!this.top) {
+            this.top = node;
+            this.bottom = node;
         } else {
-            const temp = this.top;
-            this.top = newNode;
-            this.top.next = temp;
+            node.next = this.top;
+            this.top = node;
         }
-        return ++this.length;
+        return this.size();
     }
 
     pop(){
-        
-        if(!this.top) return null;
-        if (this.length === 1){
-            
+        if (!this.top) return null;
+        let node = this.top;
+        this.length--;
+        if (this.length === 0) {
+            this.top = null;
             this.bottom = null;
-        } 
-            const temp = this.top;
-            this.top = temp.next;
-            this.length -= 1
-        
-
-        return temp.value;
+        } else {
+            this.top = node.next;
+        }
+        return node.value;
+     
     }
 
     size(){
-        return this.length
+      return this.length;
     }
 }
 
