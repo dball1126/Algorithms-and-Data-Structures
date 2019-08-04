@@ -1,12 +1,14 @@
 function depthFirstSearch(root, targetVal) {
-    if (!root) return null;
+    
     let stack = [ root ];
-    while(stack.length){
-        let ele = stack.pop();
-        if (ele.val === targetVal) return ele; 
-        if (ele.right) stack.push(ele.right)
-        if (ele.left) stack.push(ele.left);
+
+    while(stack.length) {
+        let current = stack.pop();
+        if (current.val === targetVal) return current;
+        if (current.left) stack.push(current.left);
+        if (current.right) stack.push(current.right);
     }
+
     return null;
 }
 
