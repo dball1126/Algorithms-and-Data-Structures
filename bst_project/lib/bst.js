@@ -1,58 +1,71 @@
 class TreeNode {
     constructor(val) {
-       this.val = val;
-       this.left = null;
-       this.right = null;
+      this.val = val;
+      this.left = null;
+      this.right = null;
     }
 }
 
 
 class BST {
    constructor(){
-       this.root = null;
+     this.root = null;
    }
-   insert(val, root = this.root){
-        let node = new TreeNode(val);
-        if (!root) return this.root = node;
-        if (root.val > val) {
-            if (!root.left) {
-                root.left = node;
-            } else {
-                this.insert(val, root.left)
-            }
+   insert(val, node = this.root){
+        let newNode = new TreeNode(val);
+        if (!this.root) {
+            this.root = newNode;
         } else {
-            if (!root.right) {
-                root.right = node;
+            if (node.val > val) {
+                if (!node.left) {
+                    node.left = newNode;
+                } else {
+                   return this.insert(val, node.left);
+                }
             } else {
-                this.insert(val, root.right)
+                if (!node.right) {
+                    node.right = newNode;
+                } else {
+                   return this.insert(val, node.right);
+                }
             }
         }
         return this;
     }
 
-    searchRecur(val, root = this.root){
-        if (!root) return false;
-        if (root.val === val) return true;
-        if (root.val > val) {
-            return this.searchRecur(val, root.left);
-        } else {
-            return this.searchRecur(val, root.right);
-        }
-       
+    searchRecur(val, node = this.root){
+       if (!node) return false;
+       if (node.val === val) return true;
+       if (node.val > val) {
+           if (node.left) {
+               if (node.left.val === val) return true;
+               return this.searchRecur(val, node.left);
+           } else {
+               return false;
+           }
+       } else {
+           if (node.right) {
+               if (node.right.val === val) return true;
+               return this.searchRecur(val, node.right)
+           } else {
+               return false;
+           }
+       }
     }
 
     searchIter(val) {
-        if (!this.root) return false;
-        let current = this.root;
-        while (current) {
-            if (current.val === val) return true;
-            if (current.val > val) {
-                current = current.left;
-            } else {
-                current = current.right;
-            }
-        }
-        return false;
+       if (!this.root) return false;
+       let node = this.root;
+
+       while (node) {
+           if (node.val === val) return true;
+           if (node.val > val) {
+               node = node.left;
+           } else {
+               node = node.right;
+           }
+       }
+       return false;
     }
 }
 
