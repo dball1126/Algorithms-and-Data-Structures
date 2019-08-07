@@ -1,63 +1,65 @@
 class MaxHeap {
-    constructor() {
-        this.array = [null];
+    constructor(array = null) {
+       this.array = [ array ];
     }
 
     getParent(idx) {
-        return Math.floor(idx / 2);
+        return Math.floor(idx / 2)
     }
 
     getLeftChild(idx) {
-        return idx * 2;
+        return 2 * idx;
     }
 
     getRightChild(idx) {
-        return idx * 2 + 1;
+       return 2 * idx + 1;
     }
 
     insert(val) {
-        this.array.push(val);
-        this.siftUp(this.array.length - 1);
+       this.array.push(val);
+       this.siftUp(this.array.length-1);
     }
 
     siftUp(idx) {
-        if (idx === 1) return;
-        let parentIdx = this.getParent(idx);
-        if (this.array[parentIdx] < this.array[idx]) {
-            [this.array[parentIdx], this.array[idx]] = [this.array[idx], this.array[parentIdx]]
-            this.siftUp(parentIdx);
-        }
+       if (idx === 1) return idx;
+       let parentIdx = this.getParent(idx);
+       let array = this.array;
+       
+       while(array[idx] > array[parentIdx]) {
+           [array[idx], array[parentIdx]] = [array[parentIdx], array[idx]];
+           return this.siftUp(parentIdx);
+       }
     }
     deleteMax() {
-        if (this.array.length === 2) return this.array.pop();
-        if (this.array.length === 1) return null;
-
-        let max = this.array[1];
-        this.array[1] = this.array.pop();
+        let array = this.array;
+        if (!array[1]) return null;
+        if (array.length === 2) return array.pop();
+        let max = array[1];
+        array[1] = this.array.pop();
         this.siftDown(1);
         return max;
     }
 
     siftDown(idx) {
-        let ary = this.array;
+        if (idx === this.array.length-1) return idx;
+        let array = this.array;
         let leftIdx = this.getLeftChild(idx);
         let rightIdx = this.getRightChild(idx);
-        let leftVal = ary[leftIdx];
-        let rightVal = ary[rightIdx];
+        let swapIdx;
+        let rightVal = this.array[rightIdx] || -Infinity;
+        let leftVal = this.array[leftIdx] || -Infinity;
 
-        if (leftVal === undefined) leftVal = -Infinity;
-        if (rightVal === undefined) rightVal = -Infinity;
 
-        if (ary[idx] > leftVal && ary[idx] > rightVal) return;
-
-        if (leftVal < rightVal) {
-            var swapIdx = rightIdx;
+        if (leftVal > rightVal) {
+            swapIdx = leftIdx
         } else {
-            var swapIdx = leftIdx;
+            swapIdx = rightIdx;
         }
-
-        [ ary[idx], ary[swapIdx]] = [ary[swapIdx], ary[idx]]
-        this.siftDown(swapIdx);
+        if(array[idx] > leftVal && array[idx] > rightVal) return
+        if (array[idx] < leftVal || array[idx] < rightVal) {
+            [array[idx], array[swapIdx]] = [array[swapIdx], array[idx]]
+            return this.siftDown(swapIdx);
+        } 
     }
  }
 
