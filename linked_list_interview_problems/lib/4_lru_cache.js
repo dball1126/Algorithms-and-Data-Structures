@@ -1,4 +1,4 @@
-// ============================================================================
+  // ============================================================================
 // Interview Problem: Design and Implement an LRU Cache
 // ============================================================================
 //
@@ -57,9 +57,9 @@
 // -----------
 // TODO: Implement the LRUCacheItem class here
 class LRUCacheItem {
-  constructor(val = null, key = null) {
-    this.val = val;
+  constructor(val, key) {
     this.key = key;
+    this.val = val;
     this.node = null;
   }
 }
@@ -67,10 +67,10 @@ class LRUCacheItem {
 // TODO: Implement the LRUCacheItem class here
 class LRUCache {
   constructor(limit) {
-    this.items = {};
-    this.ordering = new List();
-    this.length = 0;
-    this.limit = limit;
+   this.items = {};
+   this.ordering = new List();
+   this.limit = limit;
+   this.length = 0;
   }
 
   // TODO: Implement the size method here
@@ -80,7 +80,8 @@ class LRUCache {
 
   // TODO: Implement the get method here
   get(key) {
-    if (!this.items[key]) return null;
+    if(!this.items[key]) return null;
+
     const item = this.items[key];
     this.promote(item);
 
@@ -89,19 +90,19 @@ class LRUCache {
 
   // TODO: Implement the set method here
   set(key, val) {
-    let item;
+   let item;
 
-    if (this.items[key]) {
-      item = this.items[key];
-      item.val = val;
-      this.promote(item);
-    } else {
-      if (this.isFull()) this.prune();
+   if (this.items[key]){
+     item = this.items[key];
+    item.val = val;
+    this.promote(item);
+   } else {
+     if (this.isFull()) this.prune();
 
-      item = new LRUCacheItem(val, key);
-      item.node = this.ordering.unshift(item);
+     item = new LRUCacheItem(val, key);
+     item.node = this.ordering.unshift(item);
       this.items[key] = item;
-      this.length++;
+      this.length += 1;
     }
   }
 
@@ -110,13 +111,13 @@ class LRUCache {
   }
 
   prune() {
-    const oldest = this.ordering.pop();
-    delete this.items[oldest.key];
-    this.length = Math.max(0, this.length - 1);
+   const oldest = this.ordering.pop();
+   delete this.items[oldest.key];
+   this.length = Math.max(0, this.length - 1);
   }
 
   promote(item) {
-    this.ordering.moveToFront(item.node);
+   this.ordering.moveToFront(item.node);
   }
 }
 
