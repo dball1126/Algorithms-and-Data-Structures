@@ -1,7 +1,7 @@
 const { reverseLinkedList } = require('../lib/1_reverse_linked_list.js');
 const { stringify, linkedListIntersection } = require('../lib/2_linked_list_intersection.js');
 const { LinkedList, hasCycle } = require('../lib/3_linked_list_cycles.js');
-const { LRUCache, LRUCacheItem } = require('../lib/4_lru_cache.js');
+const { List, ListNode, LRUCache, LRUCacheItem } = require('../lib/4_lru_cache.js');
 
 const { expect } = require('chai');
 
@@ -472,6 +472,371 @@ describe('Problem 4: LRUCache', () => {
 
                 expect(lruCache.get('a')).to.equal('Not A');
                 expect(lruCache.get('b')).to.equal('Not B');
+            });
+        });
+    });
+});
+
+
+describe('Problem 5: Doubly Linked List', () => {
+    let list;
+    let listNode;
+
+    beforeEach(() => {
+        list = new List();
+    });
+
+    describe('ListNode Constructor', () => {
+        it('Should exist', () => {
+            expect(ListNode).to.exist;
+        });
+
+        it('Should be a function (ES6 classes are "special functions")', () => {
+            expect(ListNode).to.be.a('function');
+        });
+
+        it('Should have "prev" and "val" and "next" properties', () => {
+            // it('Should have value, next, and prev properties', () => {  // Doubly Linked Lists Only!
+            node = new Node('A');
+            expect(node).to.have.property('prev');
+            expect(node).to.have.property('val');
+            expect(node).to.have.property('next');
+            // expect(node).to.have.property('prev');  // Doubly Linked Lists Only!
+        });
+    });
+
+    describe('List Constructor', () => {
+        it('Should exist', () => {
+            expect(List).to.exist;
+        });
+
+        it('Should be a function (ES6 classes are "special functions")', () => {
+            expect(List).to.be.a('function');
+        });
+
+        it('Should have head, tail, and length properties', () => {
+            expect(list).to.have.property('head');
+            expect(list).to.have.property('tail');
+            expect(list).to.have.property('length');
+        });
+
+        it('Should always keep track of the length of the list', () => {
+            expect(list.length).to.equal(0);
+            list.push('C');
+            expect(list.length).to.equal(1);
+            list.unshift('A');
+            expect(list.length).to.equal(2);
+            list.shift();
+            expect(list.length).to.equal(1);
+            list.pop(1);
+            expect(list.length).to.equal(0);
+        });
+    });
+
+    describe('List Methods', () => {
+        it('Should have methods named "unshift", "shift", "push", "pop", "moveToFront", "moveToEnd"', () => {
+            expect(list.addToTail).to.be.a('function');
+            expect(list.removeTail).to.be.a('function');
+            expect(list.addToHead).to.be.a('function');
+            expect(list.removeHead).to.be.a('function');
+            expect(list.contains).to.be.a('function');
+            expect(list.get).to.be.a('function');
+            expect(list.set).to.be.a('function');
+            expect(list.insert).to.be.a('function');
+            expect(list.remove).to.be.a('function');
+            expect(list.size).to.be.a('function');
+        });
+
+        describe('addToTail', () => {
+            it('Should reassign the tail pointer when new nodes are added to the tail', () => {
+                list.addToTail('A');
+                expect(list.tail.value).to.equal('A');
+                list.addToTail('B');
+                expect(list.tail.value).to.equal('B');
+            });
+
+            it('Should reassign both the head and tail pointers when a new node is added to the tail of an empty list', () => {
+                list.addToTail('A');
+                expect(list.head).to.eql({ value: 'A', next: null });
+                expect(list.tail).to.eql({ value: 'A', next: null });
+            });
+
+            it('Should update the length property after new nodes are added to the tail', () => {
+                expect(list.length).to.equal(0);
+                list.addToTail('A');
+                expect(list.length).to.equal(1);
+                list.addToTail('B');
+                expect(list.length).to.equal(2);
+            });
+
+            it('Should return the updated list after new nodes are added to the tail', () => {
+                expect(list.addToTail('A')).to.eql({
+                    head: { value: 'A', next: null },
+                    tail: { value: 'A', next: null },
+                    length: 1
+                });
+                expect(list.addToTail('B')).to.eql({
+                    head: { value: 'A', next: { value: 'B', next: null } },
+                    tail: { value: 'B', next: null },
+                    length: 2
+                });
+            });
+        });
+
+        describe('removeTail', () => {
+            it('Should return undefined if the list is empty', () => {
+                expect(list.removeTail()).to.equal(undefined);
+            });
+
+            it('Should remove tail node from the list when removeTail is called', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                expect(list.tail.value).to.equal('B');
+                list.removeTail();
+                expect(list.tail.value).to.equal('A');
+            });
+
+            it('Should reassign the new tail\'s next pointer to null', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                list.addToTail('C');
+                expect(list.head.next.next).to.eql({ value: 'C', next: null });
+                list.removeTail();
+                expect(list.head.next.next).to.eql(null);
+            });
+
+            it('Should update the length property after removing the tail node', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                expect(list.length).to.equal(2);
+                list.removeTail();
+                expect(list.length).to.equal(1);
+                list.removeTail();
+                expect(list.length).to.equal(0);
+            });
+
+            it('Should reassign both the head and tail pointers to null when tail is removed from a list of only one node', () => {
+                list.addToTail('A');
+                expect(list.length).to.equal(1);
+                list.removeTail();
+                expect(list.head).to.equal(null);
+                expect(list.tail).to.equal(null);
+            });
+
+            it('Should return the removed tail node when removeTail is called', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                expect(list.removeTail()).to.eql({ value: 'B', next: null });
+            });
+
+        });
+
+        describe('addToHead', () => {
+            it('Should reassign the head pointer when new nodes are added to the head', () => {
+                expect(list.head).to.equal(null);
+                list.addToHead('B');
+                expect(list.head).to.eql({ value: 'B', next: null });
+                list.addToHead('A');
+                expect(list.head).to.eql({ value: 'A', next: { value: 'B', next: null } });
+            });
+
+            it('Should reassign both the head and tail pointers when a new node is added to the head of an empty list', () => {
+                list.addToHead('A');
+                expect(list.head).to.eql({ value: 'A', next: null });
+                expect(list.tail).to.eql({ value: 'A', next: null });
+            });
+
+            it('Should update the length property after new nodes are added to the head', () => {
+                expect(list.length).to.equal(0);
+                list.addToHead('A');
+                expect(list.length).to.equal(1);
+                list.addToHead('B');
+                expect(list.length).to.equal(2);
+            });
+
+            it('Should return the updated list after new nodes are added to the head', () => {
+                expect(list.addToHead('B')).to.eql({
+                    head: { value: 'B', next: null },
+                    tail: { value: 'B', next: null },
+                    length: 1
+                });
+                expect(list.addToHead('A')).to.eql({
+                    head: { value: 'A', next: { value: 'B', next: null } },
+                    tail: { value: 'B', next: null },
+                    length: 2
+                });
+            });
+        });
+
+        describe('removeHead', () => {
+            it('Should return undefined if the list is empty', () => {
+                expect(list.removeHead()).to.equal(undefined);
+            });
+
+            it('Should remove head node from the list when removeHead is called', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                expect(list.head.value).to.equal('A');
+                list.removeHead();
+                expect(list.head.value).to.equal('B');
+            });
+
+            it('Should reassign the head pointer to the next node in the list', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                expect(list.head.value).to.equal('A');
+                list.removeHead();
+                expect(list.head.value).to.equal('B');
+            });
+
+            it('Should update the length property after removing the head node', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                expect(list.length).to.equal(2);
+                list.removeHead();
+                expect(list.length).to.equal(1);
+                list.removeHead();
+                expect(list.length).to.equal(0);
+            });
+
+            it('Should reassign both the head and tail pointers to null when head is removed from a list of only one node', () => {
+                list.addToTail('A');
+                expect(list.length).to.equal(1);
+                list.removeHead();
+                expect(list.head).to.equal(null);
+                expect(list.tail).to.equal(null);
+            });
+
+            it('Should return the removed head node when removeHead is called', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                expect(list.removeHead()).to.eql({ value: 'A', next: { value: 'B', next: null } });
+            });
+        });
+
+        describe('contains', () => {
+            it('Should contain a value that was added', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                expect(list.contains('A')).to.equal(true);
+                expect(list.contains('B')).to.equal(true);
+                expect(list.contains('C')).to.equal(false);
+            });
+
+            it('Should not contain a value that was removed', () => {
+                list.addToTail('A');
+                list.addToTail('B');
+                list.removeHead();
+                expect(list.contains('A')).to.equal(false);
+            });
+        });
+
+        describe('get', () => {
+            it('Should return null if index is out of bounds', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                expect(linkedList.get(7)).to.equal(null);
+            });
+
+            it('Should return node at index specified when get is called', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                linkedList.addToTail('C');
+                expect(linkedList.get(1)).to.eql({ value: 'B', next: { value: 'C', next: null } });
+            });
+        });
+
+        describe('set', () => {
+            it('Should return true if node\'s value at index is updated', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                linkedList.addToTail('D');
+                expect(linkedList.get(1)).to.eql({ value: 'B', next: { value: 'D', next: null } });
+                expect(linkedList.set(2, 'C')).to.equal(true);
+                expect(linkedList.get(1)).to.eql({ value: 'B', next: { value: 'C', next: null } });
+            });
+
+            it('Should return false if node is not found at provided index', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                expect(linkedList.set(2, 'C')).to.equal(false);
+            });
+        });
+
+        describe('insert', () => {
+            it('Should return false if index is out of bounds', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                linkedList.addToTail('C');
+                expect(linkedList.insert(3, 'D')).to.equal(false);
+            });
+
+            it('Should return true if node is successfully inserted at index', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                linkedList.addToTail('D');
+                expect(linkedList.get(1)).to.eql({ value: 'B', next: { value: 'D', next: null } });
+                expect(linkedList.insert(2, 'C')).to.equal(true);
+                expect(linkedList.get(1)).to.eql({ value: 'B', next: { value: 'C', next: { value: 'D', next: null } } });
+            });
+
+            it('Should update the length property when a node is inserted', () => {
+                linkedList.addToTail('B');
+                linkedList.addToTail('C');
+                linkedList.addToTail('E');
+                expect(linkedList.length).to.equal(3);
+                linkedList.insert(2, 'D');
+                expect(linkedList.length).to.equal(4);
+                linkedList.insert(0, 'A');
+                expect(linkedList.length).to.equal(5);
+                linkedList.insert(4, 'F');
+                expect(linkedList.length).to.equal(6);
+            });
+        });
+
+        describe('remove', () => {
+            it('Should return undefined if index is out of bounds', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                expect(linkedList.remove(3)).to.equal(undefined);
+            });
+
+            it('Should remove node at index from the list when remove is called', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                linkedList.addToTail('C');
+                expect(linkedList.get(0)).to.eql({ value: 'A', next: { value: 'B', next: { value: 'C', next: null } } });
+                linkedList.remove(1);
+                expect(linkedList.get(0)).to.eql({ value: 'A', next: { value: 'C', next: null } });
+            });
+
+            it('Should return the removed node when remove is called', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                linkedList.addToTail('C');
+                expect(linkedList.remove(1)).to.eql({ value: 'B', next: { value: 'C', next: null } });
+            });
+
+            it('Should update the length property when a node is removed', () => {
+                linkedList.addToTail('A');
+                linkedList.addToTail('B');
+                linkedList.addToTail('C');
+                linkedList.remove(1);
+                expect(linkedList.length).to.equal(2);
+                linkedList.remove(1);
+                expect(linkedList.length).to.equal(1);
+            });
+        });
+
+        describe('size', () => {
+            it('Should return the length of the list', () => {
+                expect(linkedList.size()).to.equal(0);
+                linkedList.addToTail('A');
+                expect(linkedList.size()).to.equal(1);
+                linkedList.addToTail('B');
+                expect(linkedList.size()).to.equal(2);
+                linkedList.removeTail();
+                expect(linkedList.size()).to.equal(1);
             });
         });
     });

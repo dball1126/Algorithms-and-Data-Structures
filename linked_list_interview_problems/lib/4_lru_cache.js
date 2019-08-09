@@ -55,11 +55,11 @@
 // -----------
 // Let's code!
 // -----------
-// TODO: Implement the LRUCacheItem class here
+// TODO: Implement the LRUCacheItem class zz
 class LRUCacheItem {
-  constructor(val, key) {
-    this.key = key;
-    this.val = val;
+  constructor(key, val) {
+    this.key = key || null;
+    this.val = val || null;
     this.node = null;
   }
 }
@@ -67,10 +67,10 @@ class LRUCacheItem {
 // TODO: Implement the LRUCacheItem class here
 class LRUCache {
   constructor(limit) {
-   this.items = {};
-   this.ordering = new List();
-   this.limit = limit;
-   this.length = 0;
+    this.limit = limit;
+    this.length = 0;
+    this.items = {};
+    this.ordering = new List();
   }
 
   // TODO: Implement the size method here
@@ -80,44 +80,38 @@ class LRUCache {
 
   // TODO: Implement the get method here
   get(key) {
-    if(!this.items[key]) return null;
-
-    const item = this.items[key];
-    this.promote(item);
-
-    return item.val;
+   let node = this.items[key];
+   if (!node) return null;
+   return node.val;
   }
 
   // TODO: Implement the set method here
   set(key, val) {
-   let item;
+    let item;
+    if (this.items[key]) {
+      item = this.items[key];
+      item.val = val;
+      this.promote(item);
+    } else {
+      if (this.isFull()) this.prune();
 
-   if (this.items[key]){
-     item = this.items[key];
-    item.val = val;
-    this.promote(item);
-   } else {
-     if (this.isFull()) this.prune();
-
-     item = new LRUCacheItem(val, key);
-     item.node = this.ordering.unshift(item);
+      item = new LRUCacheItem(val, key);
+      item.node = this.ordering.unshift(item);
       this.items[key] = item;
       this.length += 1;
     }
   }
 
   isFull() {
-    return this.length >= this.limit;
+    
   }
 
   prune() {
-   const oldest = this.ordering.pop();
-   delete this.items[oldest.key];
-   this.length = Math.max(0, this.length - 1);
+   
   }
 
-  promote(item) {
-   this.ordering.moveToFront(item.node);
+  promote() {
+   
   }
 }
 
