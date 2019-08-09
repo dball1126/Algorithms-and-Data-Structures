@@ -643,7 +643,11 @@ describe('Problem 5: Doubly Linked List', () => {
             describe('moveToFront', () => {
                 it('Should reassign pointers if the list is empty', () => {
                     list.moveToFront(node)
-                    expect(list.head).to.equal(node = list.tail)
+                    expect(list.head).to.equal(node)
+                })
+                it('Should reassign pointers if the list is empty', () => {
+                    list.moveToFront(node)
+                    expect(list.tail).to.equal(node)
                 })
                 
                 it('Should rearrange the head pointer with multiple nodes in list and not the head', () => {
@@ -672,7 +676,37 @@ describe('Problem 5: Doubly Linked List', () => {
             });
 
             describe('moveToEnd', () => {
-                
+                it('Should reassign head pointers if the list is empty', () => {
+                    list.moveToEnd(node)
+                    expect(list.head).to.equal(node)
+                })
+                it('Should reassign tail pointers if the list is empty', () => {
+                    list.moveToEnd(node)
+                    expect(list.tail).to.equal(node)
+                })
+
+                it('Should rearrange the head pointer with multiple nodes in list and not the head', () => {
+                    list.push(node)
+                    list.push('D')
+                    list.moveToFront(node)
+                    expect(node).to.equal(list.head)
+                })
+
+                // it('Should rearrange the next tail pointer with multiple nodes in list', () => {
+                //     list.push(node)
+                //     list.push('D');
+                //     nodeTest = list.head
+                //     list.moveToFront(node)
+                //     expect(list.head.next).to.equal(nodeTest)
+                // })
+                // // THIS METHOD NEEDS TO BE TESTED //  
+                // it('Should rearrange the prev head pointer with multiple nodes in list', () => {
+                //     list.push(node)
+                //     list.push('D');
+                //     nodeTest = list.tail
+                //     list.moveToFront(node)
+                //     expect(list.head.prev).to.equal(null)
+                // })
             });
 
     });
