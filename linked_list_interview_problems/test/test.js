@@ -608,7 +608,25 @@ describe('Problem 5: Doubly Linked List', () => {
             });
 
             describe('pop', () => {
-             
+             it('Should return null if list is empty', () => {
+                 expect(list.pop()).to.equal(null);
+             });
+
+             it('Should change the pointer of the tail after deletion', () => {
+                list.push('G');
+                list.push('E');
+                nodeTest = list.tail;
+                list.pop();
+                expect(list.tail).to.equal(nodeTest.prev)
+             })
+
+             it('Should the val of tail', () => { 
+                list.push('C')
+                list.push('D')
+                nodeTest = list.tail.val;
+                expect(list.pop()).to.equal(nodeTest)
+             });
+
             });
 
             describe('moveToFront', () => {
