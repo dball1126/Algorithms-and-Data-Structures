@@ -586,7 +586,24 @@ describe('Problem 5: Doubly Linked List', () => {
             });
 
             describe('shift', () => {
-              
+                it('Should return null if list is empty', () => {
+                    expect(list.shift()).to.equal(null);
+                });
+
+                it('Should change the pointer of the head after deletion', () => {
+                    list.push('G');
+                    list.push('E');
+                    nodeTest = list.head;
+                    list.shift();
+                    expect(list.head).to.equal(nodeTest.next)
+                })
+
+                it('Should the val of head', () => {
+                    list.push('C')
+                    list.push('D')
+                    nodeTest = list.head.val;
+                    expect(list.shift()).to.equal(nodeTest)
+                });
 
             });
 
