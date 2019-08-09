@@ -516,28 +516,22 @@ describe('Problem 5: Doubly Linked List', () => {
 
             });
             
-            // describe('delete', () => {
+            describe('delete', () => {
 
-            //     it('Should reassign the prev.next pointer to next when prev exisits', () => {
-            //         let nodeTest;
-            //         let nodeTestPrev;
-            //         let nodeTest1;
-            //         node.prev.next = nodeTestPrev
-            //         node.next = nodeTEst;
+                it('Should reassign the prev property if it exists', () => {
+                    // nodeTest = ListNode('S');
+                    node.delete();
+                    nodeTest = node.prev
+                    expect(node.next).to.equal(nodeTest.next)
+                });
+                it('Should reassign the next property if it exists', () => {
+                    // nodeTest = ListNode('S');
+                    node.delete();
+                    nodeTest = node.next
+                    expect(node.prev).to.equal(nodeTest.prev)
+                });
 
-            //         node.delete();
-                    
-            //         expect(node).to.have.property('next');
-            //     });
-
-            //     it('Should reassign the next.prev pointer to prev when next exisits', () => {
-            //         let nodeTest;
-
-            //         node.delete();
-            //         nodeTest = (node.next === nodePrev);
-            //         expect(nodeTest) = true;
-            //     });
-            // })
+            })
     });
 
     describe('List Constructor', () => {
