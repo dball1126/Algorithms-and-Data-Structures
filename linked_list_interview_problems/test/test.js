@@ -507,6 +507,7 @@ describe('Problem 5: Doubly Linked List', () => {
             expect(node).to.have.property('next');
             // expect(node).to.have.property('prev');  // Doubly Linked Lists Only!
         });
+    });
 
         describe('ListNode Methods', () => {
             it('Should have methods named "delete"', () => {
@@ -555,6 +556,55 @@ describe('Problem 5: Doubly Linked List', () => {
 
     });
 
-    
+        describe('List Methods', () => {
+            it('Should have methods named "unshift", "shift", "push", "pop", "moveToFront", "moveToEnd"', () => {
+                expect(list.unshift).to.be.a('function');
+                expect(list.shift).to.be.a('function');
+                expect(list.push).to.be.a('function');
+                expect(list.pop).to.be.a('function');
+                expect(list.moveToFront).to.be.a('function');
+                expect(list.moveToEnd).to.be.a('function');
+            });
+
+            describe('unshift', () => {
+                it('Should return tail equivalent to head if the list is empty', () => {
+                    list.unshift('A');
+                    expect(list.tail).to.equal(list.head);
+                });
+                it('Should return head next prev equivalent to head', () =>{
+                    list.push('C');
+                    list.push('D');
+                    nodeTest = list.unshift('D');
+                    expect(nodeTest).to.equal(list.head);
+                })
+                it('Should return head next prev equivalent to head', () => {
+                    list.push('D');
+                    nodeTest = list.unshift('D');
+                    nodeTest2 = nodeTest.next.prev;
+                    expect(nodeTest2).to.equal(list.head);
+                })
+            });
+
+            describe('shift', () => {
+              
+
+            });
+
+            describe('push', () => {
+               
+            });
+
+            describe('pop', () => {
+             
+            });
+
+            describe('moveToFront', () => {
+              
+            });
+
+            describe('moveToEnd', () => {
+                
+            });
+
     });
 });
