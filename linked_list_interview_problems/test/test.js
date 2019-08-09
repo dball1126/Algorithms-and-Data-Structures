@@ -647,7 +647,27 @@ describe('Problem 5: Doubly Linked List', () => {
             });
 
             describe('moveToFront', () => {
-              
+                it('Should reassign pointers if the list is empty', () => {
+                    list.moveToFront(node)
+                    expect(list.head).to.equal(node = list.tail)
+                })
+                it('Should rearrange the head pointer with multiple nodes in list and not the head', () => {
+                    list.push(node)
+                    list.moveToFront(node)
+                    expect(node).to.equal(list.head)
+                })
+                // it('Should rearrange the next head pointer with multiple nodes in list and not the head', () => {
+                //     list.push(node)
+
+                //     list.push('D');
+                //     list.moveToFront(node)
+                //     expect(node.next).to.equal(list.tail)
+                // })
+                // it('Should rearrange the prev head pointer with multiple nodes in list and not the head', () => {
+                //     list.push(node)
+                //     list.moveToFront(node)
+                //     expect(node.prev).to.equal(list.head.prev)
+                // })
             });
 
             describe('moveToEnd', () => {
@@ -656,3 +676,5 @@ describe('Problem 5: Doubly Linked List', () => {
 
     });
 });
+
+
