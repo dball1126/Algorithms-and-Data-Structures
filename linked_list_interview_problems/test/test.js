@@ -519,13 +519,11 @@ describe('Problem 5: Doubly Linked List', () => {
             describe('delete', () => {
 
                 it('Should reassign the prev property if it exists', () => {
-                    // nodeTest = ListNode('S');
                     node.delete();
                     nodeTest = node.prev
                     expect(node.next).to.equal(nodeTest.next)
                 });
                 it('Should reassign the next property if it exists', () => {
-                    // nodeTest = ListNode('S');
                     node.delete();
                     nodeTest = node.next
                     expect(node.prev).to.equal(nodeTest.prev)
@@ -561,21 +559,25 @@ describe('Problem 5: Doubly Linked List', () => {
             });
 
             describe('unshift', () => {
-                it('Should return tail equivalent to head if the list is empty', () => {
+                it('Should reassign both the head and tail pointers to the node if the list is empty', () => {
                     list.unshift('A');
                     expect(list.tail).to.equal(list.head);
                 });
-                it('Should return head next prev equivalent to head', () =>{
-                    
+                it('Should reassign the head next pointer to the proper node', () =>{       
                     list.push('D');
+                    nodeTester = list.head;
+                    nodeTest = list.unshift('D');
+                    expect(nodeTest.next).to.equal(nodeTester);
+                })
+                it('Should reassign the head prev pointer to the proper value', () => {
+                    list.push('D');
+                    nodeTest = list.unshift('D');
+                    expect(nodeTest.prev).to.equal(null);
+                })
+                it('Should reassign the head pointer to the node pushed in', () => {
+                    list.push('G');
                     nodeTest = list.unshift('D');
                     expect(nodeTest).to.equal(list.head);
-                })
-                it('Should return head next prev equivalent to head', () => {
-                    list.push('D');
-                    nodeTest = list.unshift('D');
-                    nodeTest2 = nodeTest.next.prev;
-                    expect(nodeTest2).to.equal(list.head);
                 })
             });
 
@@ -592,7 +594,7 @@ describe('Problem 5: Doubly Linked List', () => {
                     expect(list.head).to.equal(nodeTest.next)
                 })
 
-                it('Should the val of head', () => {
+                it('Should return the the value of the head', () => {
                     list.push('C')
                     list.push('D')
                     nodeTest = list.head.val;
