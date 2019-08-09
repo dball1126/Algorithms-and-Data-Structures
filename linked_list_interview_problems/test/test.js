@@ -481,7 +481,7 @@ describe('Problem 4: LRUCache', () => {
 describe('Problem 5: Doubly Linked List', () => {
     let list;
     let node;
-
+    
     beforeEach(() => {
         list = new List();
         
@@ -490,6 +490,7 @@ describe('Problem 5: Doubly Linked List', () => {
         node = new ListNode('A', nodePrev, nodeNext);
         
     });
+   
 
     describe('ListNode Constructor', () => {
         it('Should exist', () => {
@@ -499,7 +500,10 @@ describe('Problem 5: Doubly Linked List', () => {
         it('Should be a function (ES6 classes are "special functions")', () => {
             expect(ListNode).to.be.a('function');
         });
-
+        it('Should take at least one argument', () => {
+            expect(ListNode.length).to.be.above(0);
+        });
+        
         it('Should have "prev" and "val" and "next" properties', () => {
             // it('Should have value, next, and prev properties', () => {  // Doubly Linked Lists Only!
             expect(node).to.have.property('prev');
@@ -518,12 +522,12 @@ describe('Problem 5: Doubly Linked List', () => {
             
             describe('delete', () => {
 
-                it('Should reassign the prev property if it exists', () => {
+                it('Should reassign the prev node to the proper node if passed in', () => {
                     node.delete();
                     nodeTest = node.prev
                     expect(node.next).to.equal(nodeTest.next)
                 });
-                it('Should reassign the next property if it exists', () => {
+                it('Should reassign the next node to the proper node if passed in', () => {
                     node.delete();
                     nodeTest = node.next
                     expect(node.prev).to.equal(nodeTest.prev)
