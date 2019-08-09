@@ -602,16 +602,22 @@ describe('Problem 5: Doubly Linked List', () => {
             });
 
             describe('push', () => {
-                it('Should return tail equivalent to head if the list is empty', () => {
+                it('Should reassign both the head and tail pointers to the node if the list is empty', () => {
                     list.push('A');
                     expect(list.tail).to.equal(list.head);
                 });
-                it('Should return tail prev next equivalent to tail', () => {
-                    list.push('C')
+                it('Should reassign the next tail pointer to the correct value', () => {
+                
                     nodeTest = list.push('D');
-                    expect(nodeTest).to.equal(nodeTest.prev.next);
+                    expect(nodeTest.next).to.equal(null);
                 })
-                it('Should return tail pointer to pushed in node', () => {
+                it('Should reassign the prev tail pointer to the correct node', () => {
+                    list.push('C');
+                    nodeTester = list.tail
+                    nodeTest = list.push('D');
+                    expect(nodeTest.prev).to.equal(nodeTester);
+                })
+                it('Should reassign the tail pointer to the node pushed in', () => {
                 
                     nodeTest = list.push('D');
                     expect(nodeTest).to.equal(list.tail);
@@ -628,14 +634,14 @@ describe('Problem 5: Doubly Linked List', () => {
                 list.push('E');
                 nodeTest = list.tail;
                 list.pop();
-                expect(list.tail).to.equal(nodeTest.prev)
-             })
+                expect(list.tail).to.equal(nodeTest.prev);
+             });
 
-             it('Should the val of tail', () => { 
+             it('Should return the value of tail', () => { 
                 list.push('C')
                 list.push('D')
-                nodeTest = list.tail.val;
-                expect(list.pop()).to.equal(nodeTest)
+                nodeTest = list.tail;
+                expect(list.pop()).to.equal(nodeTest.val);
              });
 
             });
@@ -651,6 +657,7 @@ describe('Problem 5: Doubly Linked List', () => {
                 })
                 
                 it('Should rearrange the head pointer with multiple nodes in list', () => {
+                    list.push('G')
                     list.push(node)
                     list.push('D')
                     list.moveToFront(node)
@@ -691,7 +698,7 @@ describe('Problem 5: Doubly Linked List', () => {
                     expect(node).to.equal(list.tail)
                 })
 
-                it('Should rearrange the next tail pointer with multiple nodes in list', () => {
+                it('Should rearrange the prev tail pointer with multiple nodes in list', () => {
                     list.push(node)
                     list.push('D');
                     nodeTest = list.tail
