@@ -572,7 +572,7 @@ describe('Problem 5: Doubly Linked List', () => {
                     expect(list.tail).to.equal(list.head);
                 });
                 it('Should return head next prev equivalent to head', () =>{
-                    list.push('C');
+                    
                     list.push('D');
                     nodeTest = list.unshift('D');
                     expect(nodeTest).to.equal(list.head);
@@ -591,7 +591,20 @@ describe('Problem 5: Doubly Linked List', () => {
             });
 
             describe('push', () => {
-               
+                it('Should return tail equivalent to head if the list is empty', () => {
+                    list.push('A');
+                    expect(list.tail).to.equal(list.head);
+                });
+                it('Should return tail prev next equivalent to tail', () => {
+                    list.push('C')
+                    nodeTest = list.push('D');
+                    expect(nodeTest).to.equal(nodeTest.prev.next);
+                })
+                it('Should return tail pointer to pushed in node', () => {
+                
+                    nodeTest = list.push('D');
+                    expect(nodeTest).to.equal(list.tail);
+                })
             });
 
             describe('pop', () => {
