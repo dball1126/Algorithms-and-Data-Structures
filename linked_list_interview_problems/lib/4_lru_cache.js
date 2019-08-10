@@ -120,27 +120,38 @@ class LRUCache {
 // Given: Doubly Linked List - Do Not Edit!
 // ----------------------------------------
 class ListNode {
-  constructor(val) {
+  constructor(val, prev, next) {
     this.val = val;
-    this.next = null;
-    this.prev = null;
+    this.next = next || null;
+    this.prev = prev || null;
   }
 
 
   delete() {
-   if (this.prev) this.prev = this.prev.next;
-   if (this.next) this.next = this.next.prev
+   if (this.prev) this.prev.next = this.next;
+   if (this.next) this.next.prev = this.prev;
   }
 }
 
 class List {
   constructor() {
-    
+    this.head = null;
+    this.tail = null;
   }
 
   // Insert at the head of the list.
   unshift(val) {
-   
+   let node = new ListNode(val);
+   if (!this.head) {
+     this.head = node;
+     this.tail = node;
+   } else {
+    node.next = this.head;
+    node.prev = null;
+    this.head.prev = node;
+    this.head = node;
+   }
+   return this.head;
   }
 
   // Delete at the head of the list.

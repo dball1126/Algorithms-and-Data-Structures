@@ -578,11 +578,12 @@ describe('Problem 5: Doubly Linked List', () => {
                     nodeTest = list.unshift('D');
                     expect(nodeTest.prev).to.equal(null);
                 })
-                it('Should reassign the head pointer to the node pushed in', () => {
+                it('Should return and reassign the head pointer to the node pushed in', () => {
                     list.push('G');
                     nodeTest = list.unshift('D');
                     expect(nodeTest).to.equal(list.head);
                 })
+                
             });
 
             describe('shift', () => {
