@@ -562,6 +562,29 @@ describe('Problem 5: Doubly Linked List', () => {
                 expect(list.moveToEnd).to.be.a('function');
             });
 
+            describe('push', () => {
+                it('Should reassign both the head and tail pointers to the node if the list is empty', () => {
+                    list.push('A');
+                    expect(list.tail).to.equal(list.head);
+                });
+                it('Should reassign the next tail pointer to the correct value', () => {
+
+                    nodeTest = list.push('D');
+                    expect(nodeTest.next).to.equal(null);
+                })
+                it('Should reassign the prev tail pointer to the correct node', () => {
+                    list.push('C');
+                    nodeTester = list.tail
+                    nodeTest = list.push('D');
+                    expect(nodeTest.prev).to.equal(nodeTester);
+                })
+                it('Should reassign the tail pointer to the node pushed in', () => {
+
+                    nodeTest = list.push('D');
+                    expect(nodeTest).to.equal(list.tail);
+                })
+            });
+
             describe('unshift', () => {
                 it('Should reassign both the head and tail pointers to the node if the list is empty', () => {
                     list.unshift('A');
@@ -606,29 +629,6 @@ describe('Problem 5: Doubly Linked List', () => {
                     expect(list.shift()).to.equal(nodeTest)
                 });
 
-            });
-
-            describe('push', () => {
-                it('Should reassign both the head and tail pointers to the node if the list is empty', () => {
-                    list.push('A');
-                    expect(list.tail).to.equal(list.head);
-                });
-                it('Should reassign the next tail pointer to the correct value', () => {
-                
-                    nodeTest = list.push('D');
-                    expect(nodeTest.next).to.equal(null);
-                })
-                it('Should reassign the prev tail pointer to the correct node', () => {
-                    list.push('C');
-                    nodeTester = list.tail
-                    nodeTest = list.push('D');
-                    expect(nodeTest.prev).to.equal(nodeTester);
-                })
-                it('Should reassign the tail pointer to the node pushed in', () => {
-                
-                    nodeTest = list.push('D');
-                    expect(nodeTest).to.equal(list.tail);
-                })
             });
 
             describe('pop', () => {

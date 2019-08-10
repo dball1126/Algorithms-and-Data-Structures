@@ -138,6 +138,12 @@ class List {
     this.head = null;
     this.tail = null;
   }
+  // Do This One First
+
+  // Insert at the end of the list.
+  push(val) {
+    
+  }
 
   // Insert at the head of the list.
   unshift(val) {
@@ -156,13 +162,16 @@ class List {
 
   // Delete at the head of the list.
   shift() {
-   
-    
-  }
-
-  // Insert at the end of the list.
-  push() {
-    
+   if (!this.head) return null;
+   let node = this.head;
+   if (!this.head.next) {
+     this.head = null;
+     this.tail = null;
+   } else {
+     this.head = this.head.next;
+     this.head.prev = null;
+   }
+    return node.val;
   }
 
   // Delete at the end of the list.
