@@ -578,7 +578,7 @@ describe('Problem 5: Doubly Linked List', () => {
                     nodeTest = list.push('D');
                     expect(nodeTest.prev).to.equal(nodeTester);
                 })
-                it('Should reassign the tail pointer to the node pushed in', () => {
+                it('Should return and reassign the tail pointer to the node pushed in', () => {
 
                     nodeTest = list.push('D');
                     expect(nodeTest).to.equal(list.tail);
@@ -654,16 +654,16 @@ describe('Problem 5: Doubly Linked List', () => {
             });
 
             describe('moveToFront', () => {
-                it('Should reassign pointer if the list is empty', () => {
+                it('Should reassign the head pointer if the list is empty', () => {
                     list.moveToFront(node)
                     expect(list.head).to.equal(node)
                 })
-                it('Should reassign pointer if the list is empty', () => {
+                it('Should reassign the tail pointer if the list is empty', () => {
                     list.moveToFront(node)
                     expect(list.tail).to.equal(node)
                 })
                 
-                it('Should rearrange the head pointer with multiple nodes in list', () => {
+                it('Should reassign the head pointer with multiple nodes in list', () => {
                     list.push('G')
                     list.push(node)
                     list.push('D')
@@ -671,7 +671,7 @@ describe('Problem 5: Doubly Linked List', () => {
                     expect(node).to.equal(list.head)
                 })
 
-                it('Should rearrange the next head pointer with multiple nodes in list', () => {
+                it('Should reassign the next head pointer with multiple nodes in list', () => {
                     list.push(node)
                     list.push('D');
                     nodeTest = list.head
@@ -679,7 +679,7 @@ describe('Problem 5: Doubly Linked List', () => {
                     expect(list.head.next).to.equal(nodeTest)
                 })
   
-                it('Should rearrange the prev head pointer with multiple nodes in list', () => {
+                it('Should reassign the prev head pointer with multiple nodes in list', () => {
                     list.push(node)
                     list.push('D');
                     list.moveToFront(node)

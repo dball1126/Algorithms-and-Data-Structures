@@ -142,7 +142,16 @@ class List {
 
   // Insert at the end of the list.
   push(val) {
-    
+    let node = new ListNode(val);
+    if (!this.tail) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      node.prev = this.tail;
+      this.tail.next = node;
+      this.tail = node;
+    }
+    return this.tail
   }
 
   // Insert at the head of the list.
@@ -176,19 +185,49 @@ class List {
 
   // Delete at the end of the list.
   pop() {
-    
+    if (!this.head) return null;
+    let node = this.tail;
+    if (!this.head.next) {
+    this.head = null;
+      this.tail = null;
+    } else {
+      this.tail = this.tail.prev;
+      this.tail.next = null;
+    }
+    return node.val;
   }
 
   // Move a node to the front of the List
-  moveToFront() {
-    
-    
+  moveToFront(node) {
+    if (node === this.head) return;
+    if (!this.head) {
+      this.head = node;
+      this.tail = node;
+    }
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+    node.prev = null;
+    node.next = this.head;
+    this.head.prev = node;
+    this.head = node;
 
   }
 
   // Move a node to the end of the List
   moveToEnd(node) {
-   
+    if (!this.head){
+      this.head = node;
+      this.tail = node;
+      return;
+    }
+    if (!this.tail === node) return;
+
+      node.prev.next = node.next;
+      node.next.prev = node.prev;
+      node.next = null;
+      node.prev = this.tail;
+      this.tail.next = node;
+      this.tail = node;
     }
 
     // Don't delegate to push, since we want to keep the same
