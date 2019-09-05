@@ -41,7 +41,7 @@ class Stack {
     }
     push(val) {
         let node = new Node(val);
-        this.length++;
+        
         if (!this.top){
     this.top = this.bottom = node;
         } else if (this.length === 1) {
@@ -51,10 +51,14 @@ class Stack {
             node.next = this.top;
             this.top = node;
         }
-        return this.length;
+        this.length++;
+        return this.size;
     }
     size(){
         return this.length;
+    }
+    pop(){
+
     }
 }
 
