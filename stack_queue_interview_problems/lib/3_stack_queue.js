@@ -39,26 +39,33 @@ class Stack {
         this.bottom = null;
         this.length = 0;
     }
-    push(val) {
+    push(val){
         let node = new Node(val);
         
         if (!this.top){
     this.top = this.bottom = node;
-        } else if (this.length === 1) {
-            this.top = node;
-            node.next = this.bottom;
         } else {
             node.next = this.top;
             this.top = node;
         }
         this.length++;
-        return this.size;
+        return this.size();
     }
     size(){
         return this.length;
     }
     pop(){
-
+        if (!this.top) return null;
+        const node = this.top;
+        if (this.length === 1){
+    this.top = this.bottom = null;
+        } else {
+            this.top = node.next
+        }
+        this.length--;
+        // return node or node.value that is the question
+       // it appears the tests rely on the StackQueue class below
+        return node.value;
     }
 }
 
