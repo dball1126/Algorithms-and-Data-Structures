@@ -83,21 +83,26 @@ class StackQueue {
         if(!this.front){
             this.front = this.back = node;
         } else if (this.length >= 1){
-            node.next = this.back;
+            this.back.next = node;
             this.back = node;
         }
-       return this.length++;
-
+       this.length++;
+       return this.size();
     }
     dequeue(){
         if (!this.front) return null;
         let node = this.front;
         if (this.length === 1) {
             this.front = this.back = null;
+        } else if (this.length === 2) {
+            this.front = this.back;
         } else {
-            
+            this.front = this.front.next
         }
+        this.length--;
+        return node;
     }
+
     pop(){
 
     }
