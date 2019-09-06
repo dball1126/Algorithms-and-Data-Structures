@@ -39,14 +39,17 @@ class Stack {
         this.bottom = null;
         this.length = 0;
     }
-    push(val){
-        let node = new Node(val);
+    push(node){
+        // let node = new Node(val);
         
         if (!this.top){
     this.top = this.bottom = node;
         } else {
             node.next = this.top;
             this.top = node;
+            // const temp = this.top;
+            // this.top = node;
+            // this.top.next = temp;
         }
         this.length++;
         return this.size();
@@ -65,7 +68,7 @@ class Stack {
         this.length--;
         // return node or node.value that is the question
        // it appears the tests rely on the StackQueue class below
-        return node.value;
+        return node;
     }
 }
 
