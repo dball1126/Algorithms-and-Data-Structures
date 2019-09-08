@@ -61,15 +61,14 @@
 // -----------
 function hasCycle(linkedList) {
   // TODO: Implement the hasCycle function!
-  let node = linkedList.head;
-  if (!node) return undefined;
-  if (linkedList.length === 1) return node.next === node;
-  let visited = new Set();
-
-  while (node) {
-    if (visited.has(node)) return true;
-    visited.add(node);
-    node = node.next;
+  let hashMap = new Map();
+  let current = linkedList.head;
+  if (!current.next === null) return false;
+  if (linkedList.head === linkedList.tail) return true;
+  while (current) {
+    if (hashMap.has(current.value)) return true;
+    hashMap.set(current.value, current.value)
+    current = current.next;
   }
   return false;
 }
