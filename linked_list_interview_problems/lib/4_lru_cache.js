@@ -165,12 +165,30 @@ class List {
 
   // Delete at the head of the list.
   shift() {
-  
+    if (!this.head) return null;
+    let node = this.head;
+    if(this.length===1){
+      this.head = this.tail = null;
+    } else if (this.length >=1) {
+      this.head.next.prev = null;
+      this.head = this.head.next;
+    }
+    this.length--;
+    return node.val;
   }
 
   // Delete at the end of the list.
   pop() {
-  
+    if (!this.head) return null;
+    let node = this.tail;
+    if (this.length === 1) {
+      this.head = this.tail = null;
+    } else if (this.length > 1) {
+      this.tail.prev.next = null;
+      this.tail = this.tail.prev;
+    }
+    this.length--;
+    return node.val;
   }
 
   // Move a node to the front of the List
