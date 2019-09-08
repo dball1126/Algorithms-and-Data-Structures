@@ -151,7 +151,16 @@ class List {
 
   // Insert at the head of the list.
   unshift(val) {
-  
+    let node = new ListNode(val);
+    if (!this.head) {
+      this.head = this.tail = node;
+    } else if (this.length >= 1) {
+      this.head.prev = node;
+      node.next = this.head;
+      this.head = node;
+    }
+    this.length++
+    return node;
   }
 
   // Delete at the head of the list.
