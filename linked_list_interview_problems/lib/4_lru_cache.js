@@ -57,7 +57,7 @@
 // -----------
 // TODO: Implement the LRUCacheItem class zz
 class LRUCacheItem {
-  constructor(key, val) {
+  constructor(val, key) {
     this.key = key || null;
     this.val = val || null;
     this.node = null;
@@ -89,11 +89,24 @@ class LRUCache {
 
   // TODO: Implement the set method here
   set(key, val) {
-   if (!this.items[key]) return null;
-   let node = new LRUCacheItem(key, val);
-   this.items[key] = node;
+    let item;
+    // Set an existing item
+    if (this.items[key]) {
+      item = this.items[key];
+      item.val = val;
+      this.promote(item);
+
+      // Set a new item
+    } else {
+      // Make space if necessary
+      if (this.isFull()) this.prune();
+
+      item = new LRUCacheItem(val, key);
+      item.node = this.ordering.unshift(item);
+      this.items[key] = item;
+      this.length += 1;
+    }
    
-   this.promote(node);
   }
 
   isFull() {
@@ -101,7 +114,9 @@ class LRUCache {
   }
 
   prune() {
-   
+   let item = this.ordering.pop();
+   delete this.items[item.key];
+   this.length = Math.max(0, this.length-1)
   }
 
   promote(item) {
@@ -193,13 +208,47 @@ class List {
 
   // Move a node to the front of the List
   moveToFront(node) {
-   
+   if (!this.head) {
+     this.tail = this.head = node;
+
+   } else if (node.val === this.tail.val){
+     this.tail.prev = null;
+     this.tail = this.tail.prev;
+     node.next = this.head;
+     this.head.prev = node;
+     this.head = node;
+     node.prev = null;
+   } 
+   else {
+      node.prev.next = node.next;
+      node.next.prev = node.prev;
+      this.head.prev = node;
+      node.next = this.head;
+      node.prev = null;
+      this.head = node;
+   }
 
   }
 
   // Move a node to the end of the List
   moveToEnd(node) {
-  
+    if (!this.head) {
+      this.head = this.tail = node;
+    } else if (this.head.val === node.val) {
+      this.head.next.prev = null;
+      this.head = this.head.next;
+      this.tail.next = node;
+      node.prev = this.tail;
+      node.next = null;
+      this.tail = node;
+    } else {
+      node.prev.next = node.next;
+      node.next.prev = node.prev;
+      this.tail.next = node;
+      node.prev = this.tail;
+      node.next = null;
+      this.tail = node;
+    }
 
     // Don't delegate to push, since we want to keep the same
     // object.
