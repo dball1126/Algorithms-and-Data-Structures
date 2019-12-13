@@ -1,18 +1,14 @@
 // you may assume that the array will always have a null element at the 0-th index
 function isMaxHeap(array = null, idx=1) {
-  let current;
-  let left;
-  let right;
+    if (array.length <= 2) return true;
 
-  for (let i = idx; i < array.length; i++) {
-      if (i + 1 <= array.length-1) {
-          current = array[i];
-          left = array[2 * i];
-          right = array[2 * i + 1];
-      }
-      if (right > current || left > current) return false;
-  }
-  return true;
+    for (let i = 1; (i*2)+1 < array.length; i++) {
+        const element = array[i];
+        const left = array[i * 2];
+        const right = array[(i * 2) + 1]
+       if (left > element || right > element)  return false;
+    }
+    return true
 }
 
 
