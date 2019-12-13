@@ -205,6 +205,29 @@ describe('MinHeap', () => {
             });
         });
     });
+        
+        describe('#getLeftChild(idx)', () => {
+            it('should return the left child idx of the given idx', () => {
+                let heap = new MinHeap();
+                expect(heap.getLeftChild(4)).to.equal(8);
+                expect(heap.getLeftChild(8)).to.equal(16);
+            });
+        });
 
-  
+        describe('#getRightChild(idx)', () => {
+            it('should return the right child idx of the given idx', () => {
+                let heap = new MinHeap();
+                expect(heap.getRightChild(4)).to.equal(9);
+                expect(heap.getRightChild(8)).to.equal(17);
+            });
+        });
+        
+        describe('#insert(val)', () => {
+            it('should add a value to the array', () => {
+                let heap = new MinHeap();
+                heap.insert(1);
+                heap.insert(2);
+                expect(heap.array).to.eql([null,1,2]);
+            })
+        })
 });

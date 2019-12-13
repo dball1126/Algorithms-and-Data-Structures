@@ -8,15 +8,16 @@ class MinHeap {
     }
 
     getLeftChild(idx) {
-        
+        return idx * 2;
     }
 
     getRightChild(idx) {
-        
+        return idx * 2 + 1;
     }
 
     insert(val) {
-      
+      this.array.push(val);
+      this.siftUp(val);
     }
 
     siftUp(idx) {
