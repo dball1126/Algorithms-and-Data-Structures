@@ -176,3 +176,35 @@ describe('isMaxHeap(array)', () => {
 describe('Leet Code #215', () => {
     it ('https://leetcode.com/problems/kth-largest-element-in-an-array/')
 });
+
+
+
+// -------------------------------------------------------------------------------
+
+describe('MinHeap', () => {
+    describe('constructor()', () => {
+        it('should initialize a new array with a default value of null', () => {
+            let heap = new MinHeap();
+            expect(heap.array).to.be.a('array');
+            expect(heap.array).to.eql([null]);
+        });
+    });
+
+    describe('#getParent(idx)', () => {
+        it('should return the parent idx of the given idx according to heap array rules', () => {
+            let heap = new MinHeap();
+            expect(heap.getParent(8)).to.equal(4);
+            expect(heap.getParent(10)).to.equal(5);
+        });
+
+        context('when the given idx is odd', () => {
+            it('should still return the correct parent idx', () => {
+                let heap = new MinHeap();
+                expect(heap.getParent(9)).to.equal(4);
+                expect(heap.getParent(11)).to.equal(5);
+            });
+        });
+    });
+
+  
+});
