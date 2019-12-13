@@ -1,7 +1,7 @@
 const chai = require('chai');
 chai.use(require('chai-spies'));
 const { expect, spy } = chai;
-
+const { MinHeap } = require('../lib/min_heap');
 const { MaxHeap } = require('../lib/max_heap');
 const { isMaxHeap } = require('../lib/is_heap'); 
 
