@@ -269,6 +269,18 @@ describe('MinHeap', () => {
         });
     });
 
-    
+    describe('#siftDown(idx)', () => {
+        it('should continually sift down the element at given index until max heap property is restored', () => {
+            let heap1 = new MinHeap();
+            heap1.array = [null, 100, 3,5,9,8];
+            heap1.siftDown(1);
+            expect(heap1.array).to.eql([null, 3,5,100,9,8]);
+
+            let heap2 = new MinHeap();
+            heap2.array = [null, 100, 3,5,9,8];
+            heap2.siftDown(1);
+            expect(heap2.array[1]).to.eql(3);
+        });
+    });
        
 });

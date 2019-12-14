@@ -39,7 +39,29 @@ class MinHeap {
     }
 
     siftDown(idx) {
-       
+       if(this.array.length === 2) return;
+        let current = this.array[idx];
+        let leftIdx = this.getLeftChild(idx);
+        let rightIdx = this.getRightChild(idx);
+        let leftChild = this.array[leftIdx];
+        let rightChild = this.array[rightIdx];
+
+        if (leftChild === undefined) leftChild = Infinity;
+        if (rightChild === undefined) rightChild = Infinity;
+
+        if (current < leftChild && current < rightChild) return;
+
+        let swapIdx;
+        if (rightChild > leftChild){
+            [this.array[leftIdx], this.array[rightIdx]] = [this.array[rightIdx], this.array[leftIdx]]
+            swapIdx = rightIdx
+        } else {
+            swapIdx = leftIdx
+        }
+
+        [this.array[swapIdx], this.array[idx]] = [this.array[idx], this.array[swapIdx]]
+        this.siftDown(swapIdx);
+        
     }
 }
 
