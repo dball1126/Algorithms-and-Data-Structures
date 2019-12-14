@@ -227,7 +227,48 @@ describe('MinHeap', () => {
                 let heap = new MinHeap();
                 heap.insert(1);
                 heap.insert(2);
-                expect(heap.array).to.eql([null,1,2]);
+                heap.insert(3);
+                expect(heap.array).to.eql([null,1,2, 3]);
             })
-        })
+
+            context('when min heap property is broken', () => {
+                it ('should restore min heap property with left children bigger than right children', () => {
+                    let heap = new MinHeap();
+                    heap.insert(0);
+                    heap.insert(3);
+                    heap.insert(6);
+                    heap.insert(5);
+                    heap.insert(9);
+                    heap.insert(8);
+                    expect(heap.array).to.eql([null, 0, 3, 6, 5,9,8]);
+                });
+
+            it('should call #siftUp', () => {
+                let heap = new MinHeap();
+                spy.on(heap, 'siftUp');
+                heap.insert(100);
+                heap.insert(32);
+                heap.insert(24);
+                heap.insert(42);
+                expect(heap.siftUp).to.have.been.called.at.least(1);
+            });
+        });
+    });
+
+    describe('#siftUp(idx)', () => {
+        it('should continually sift up the element at given index until min heap property is restored', () => {
+            let heap1 = new MinHeap();
+            heap1.array = [null, 3, 6, 5, 9,8,2];
+            heap1.siftUp(6);
+            expect(heap1.array[1]).to.eql(2);
+
+            let heap2 = new MinHeap();
+            heap2.array = [null, 6, 5, 9, 8,3];
+            heap2.siftUp(5);
+            expect(heap2.array[1]).to.eql(3);
+        });
+    });
+
+    
+       
 });
