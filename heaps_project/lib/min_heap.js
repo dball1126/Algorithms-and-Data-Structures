@@ -34,9 +34,16 @@ class MinHeap {
         }
     }
 
-    deleteMax() {
-       
-    }
+    deleteMin() {
+        if (this.array.length <= 1) return null;
+        if (this.array.length === 2) return this.array.pop();
+        
+        let min = this.array[1];
+        this.array[1] = this.array.pop();
+
+        this.siftDown(1);
+        return min;
+    }   
 
     siftDown(idx) {
        if(this.array.length === 2) return;
@@ -50,13 +57,11 @@ class MinHeap {
         if (rightChild === undefined) rightChild = Infinity;
 
         if (current < leftChild && current < rightChild) return;
-
         let swapIdx;
-        if (rightChild > leftChild){
-            [this.array[leftIdx], this.array[rightIdx]] = [this.array[rightIdx], this.array[leftIdx]]
-            swapIdx = rightIdx
-        } else {
+        if (leftChild < rightChild){
             swapIdx = leftIdx
+        } else {
+            swapIdx = rightIdx
         }
 
         [this.array[swapIdx], this.array[idx]] = [this.array[idx], this.array[swapIdx]]

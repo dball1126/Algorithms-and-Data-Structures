@@ -274,12 +274,60 @@ describe('MinHeap', () => {
             let heap1 = new MinHeap();
             heap1.array = [null, 100, 3,5,9,8];
             heap1.siftDown(1);
-            expect(heap1.array).to.eql([null, 3,5,100,9,8]);
+            expect(heap1.array).to.eql([null, 3,8,5,9,100]);
 
             let heap2 = new MinHeap();
             heap2.array = [null, 100, 3,5,9,8];
             heap2.siftDown(1);
             expect(heap2.array[1]).to.eql(3);
+        });
+    });
+
+    describe('#deleteMin()', () => {
+        it('should delete the minimum element from the heap', () => {
+            let heap = new MinHeap();
+            heap.array = [null, 3,5,6,9,8];
+            heap.deleteMin();
+            expect(heap.array.includes(3)).to.equal(false);
+        });
+
+        it('should return the minimum element', () => {
+            let heap = new MinHeap();
+            heap.array = [null, 3,5,6,9,8];
+            expect(heap.deleteMin()).to.equal(3);
+        });
+
+        it('should restore min heap property', () => {
+            let heap = new MinHeap();
+            heap.array = [null, 3,5,6,9,8];
+            heap.deleteMin();
+            expect(heap.array).to.eql([null, 5,8,6,9]);
+        });
+
+        it('should call #siftDown', () => {
+            let heap = new MinHeap();
+            spy.on(heap, 'siftDown');
+            heap.array = [null, 100, 50, 27, 32, 42, 24];
+            heap.deleteMin();
+            expect(heap.siftDown).to.have.been.called.at.least(1);
+        });
+
+        context('when the heap contains a single element', () => {
+            it ('should remove and return that element', () => {
+                let heap = new MinHeap();
+                heap.array = [null, 42];
+                expect(heap.deleteMin()).to.equal(42);
+                expect(heap.array).to.eql([null]);
+            });
+        });
+
+        context('when the heap contains no elements', () => {
+            it ('should return null', () => {
+                let heap = new MinHeap();
+                expect(heap.deleteMin()).to.equal(null);
+                expect(heap.deleteMin()).to.equal(null);
+                expect(heap.array).to.eql([null]);
+            });
         });
     });
        
