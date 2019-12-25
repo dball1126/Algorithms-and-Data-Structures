@@ -1,97 +1,98 @@
 class Node {
     constructor(){
-        this.children = {};
-        this.isTerminal = false;
+     this.children = {}
+     this.isTerminal = false;
     }
 }
 
 class Trie {
    constructor() {
-       this.root = new Node();
+        this.root = new Node();
    }
-   insertRecur(word, root=this.root){
-        let letter = word[0];
-        if (!(letter in root.children)) {
-            root.children[letter] = new Node();
-        }
 
-        if (word.length === 1) {
-            root.children[letter].isTerminal = true;
-        } else {
-            this.insertRecur(word.slice(1), root.children[letter]);
-        }
+   insertRecur(word, root=this.root){
+    if (!word.length) return;
+    const letter = word[0];
+    const suffix = word.slice(1);
+
+    if (!(letter in root.children)) root.children[letter] = new Node();
+    if (!suffix.length) root.children[letter].isTerminal = true;
+
+    this.insertRecur(suffix, root.children[letter]);
    }
 
    insertIter(word) {
-        let node = this.root;
-        for (let i = 0; i < word.length; i++) {
-            
-            if (!(word[i] in node.children)) {
-                node.children[word[i]] = new Node();
-            }
-
-            node = node.children[word[i]];
-        }
-
-        node.isTerminal = true;
+    if (!word.length) return;
+    let root = this.root;
+    for (let i = 0; i < word.length; i++) {
+        const letter = word[i];
+        if (!(letter in root.children)) root.children[letter] = new Node();
+        if (i === word.length-1) root.children[letter].isTerminal = true;
+        root = root.children[letter];
+    }
+    
    }
 
    searchRecur(word, root=this.root) {
-       if (word.length === 0) {
-           if (root.isTerminal) {
-               return true;
-           } else {
-               return false;
-           }
-       }
-       let letter = word[0];
-       if (letter in root.children) {
-           return this.searchRecur(word.slice(1), root.children[letter])
-       } else {
-           return false;
-       }
+        if (!word.length) return false;
+        const letter = word[0];
+        const suffix = word.slice(1);
+
+        if (!(letter in root.children)) return false;
+        if (root.children[letter].isTerminal) return true;
+        
+        return this.searchRecur(suffix, root.children[letter])
    }
+
    searchIter(word) {
-        let node = this.root;
+        if (!word.length) return false;
+        root = this.root;
 
-        for (let j = 0; j < word.length; j++) {
-            let letter = word[j];
-            if (!(letter in node.children)) {
-                return false;
-            }
-
-            node = node.children[letter];
+        for (let i = 0; i < word.length; i++) {
+            const letter = word[i];
+            if (!(letter in root.children)) return false;
+            if (root.children[letter].isTerminal) return true;
+            root = root.children[letter]
         }
-
-       return node.isTerminal
+        return false;
    }
-   wordsWithPrefix(prefix, root=this.root) {
-       if (prefix.length === 0) {
+
+   wordsWithPrefix(prefix = '', root=this.root) {
        let allWords = [];
-       if (root.isTerminal) allWords.push('');
+       if (prefix === '') {
+           if (root.isTerminal) allWords.push('');
+           for(let letter in root.children) {
+               let child = root.children[letter];
+               let suffixes = this.wordsWithPrefix(prefix, child);
+               let words = suffixes.map(chars => letter + chars);
+               allWords.push(...words);
+           }
 
-       for (let letter in root.children) {
-           let child = root.children[letter];
-           let suffixes = this.wordsWithPrefix(prefix, child);
-           let words = suffixes.map(suffix => letter + suffix)
-           allWords.push(...words);
-       }
-
-       return allWords;
-    } else {
-        let firstLetter = prefix[0];
-        let child = root.children[firstLetter];
-        if (child === undefined) {
+       } else {
+        let letter = prefix[0];
+        let rest = prefix.slice(1);
+        if (!(letter in root.children)) {
             return [];
         } else {
-
-            let suffixes = this.wordsWithPrefix(prefix.slice(1), root.children[firstLetter]);
-            let words = suffixes.map(suffix => firstLetter + suffix);
-            return words;
+            let suffixes = this.wordsWithPrefix(rest, root.children[letter]);
+            let words = suffixes.map(chars => letter + chars);
+            allWords.push(...words)
         }
+       }
+       return allWords
     }
-   }
 } 
+
+let trie = new Trie();
+trie.insertRecur('ten')
+trie.insertRecur('tea')
+trie.insertRecur('taco')
+trie.insertRecur('tex')
+trie.insertRecur('in')
+trie.insertRecur('inn')
+trie.insertRecur('inside')
+trie.insertRecur('instructor')
+console.log(trie.wordsWithPrefix('i'))
 
 module.exports = {
     Node,
