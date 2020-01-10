@@ -5,10 +5,10 @@ class TreeNode {
     }
 }
 
-function node_height(root){
+function nodeHeight(root){
     if (!root) return -1;
-    let leftSide = node_height(root.left) + 1;
-    let rightSide = node_height(root.right) + 1;
+    let leftSide = nodeHeight(root.left) + 1;
+    let rightSide = nodeHeight(root.right) + 1;
     return Math.max(leftSide, rightSide);
 }
 
@@ -19,8 +19,9 @@ node.right.right = new TreeNode(4);
 node.left.left = new TreeNode(5);
 node.left.left.left = new TreeNode(6);
 
-console.log(node_height(node))
+console.log(nodeHeight())
+
 
 module.exports = {
-    node_height
+    nodeHeight
 }

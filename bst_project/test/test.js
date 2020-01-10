@@ -1,7 +1,7 @@
 const chai = require('chai');
 chai.use(require('chai-spies'));
 const { expect, spy } = chai;
-
+const { nodeHeight} = require('../lib/node_height');
 const { TreeNode, BST } = require('../lib/bst');
 
 describe('BST', () => {
@@ -130,4 +130,53 @@ describe('Leet Code #108', () => {
 
 describe('Leet Code #110', () => {
     it('https://leetcode.com/problems/balanced-binary-tree/')
+});
+
+
+describe('nodeHeight(root)', () => {
+    
+        it('should return -1 if there is no root', () => {
+            let getHeight = nodeHeight();
+            expect(getHeight).to.equal(-1);
+        })
+    
+        it('should return a height of three when the left child has at least three left children', () => {
+            let node = new TreeNode(1);
+            node.left = new TreeNode(2);
+            node.right = new TreeNode(3);
+            node.right.right = new TreeNode(4);
+            node.left.left = new TreeNode(5);
+            node.left.left.left = new TreeNode(6);
+
+            let getHeight = nodeHeight(node);
+            expect(getHeight).to.equal(3);
+            
+        })
+
+        it('should return a height of one when the root only has one child', () => {
+            let node = new TreeNode(1);
+            node.left = new TreeNode(2);
+        
+            let getHeight = nodeHeight(node);
+            expect(getHeight).to.equal(1);
+            
+        })
+
+        it('should return a height of zero when the root does not have children', () => {
+            let node = new TreeNode(1);
+            let getHeight = nodeHeight(node);
+            expect(getHeight).to.equal(0);
+        })
+      
+        it('should return a height of four when the right child has four right children and the left child has one', () => {
+            let node = new TreeNode(1);
+            node.left = new TreeNode(2);
+            node.right = new TreeNode(3);
+            node.right.right = new TreeNode(4);
+            node.right.right.right = new TreeNode(5);
+            node.right.right.right.right = new TreeNode(6);
+
+            let getHeight = nodeHeight(node);
+            expect(getHeight).to.equal(4);
+        });
 });
