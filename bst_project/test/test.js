@@ -3,6 +3,7 @@ chai.use(require('chai-spies'));
 const { expect, spy } = chai;
 const { nodeHeight} = require('../lib/node_height');
 const { TreeNode, BST } = require('../lib/bst');
+const {leftLeftRotation} = require('../lib/rotations');
 
 describe('BST', () => {
     describe('#constructor()', () => {
@@ -180,3 +181,44 @@ describe('nodeHeight(root)', () => {
             expect(getHeight).to.equal(4);
         });
 });
+
+
+describe('leftLeftRotation(node)', () => {
+    let node = new TreeNode(20);
+    let node15 = new TreeNode(15);
+    let node25 = new TreeNode(25);
+    let node10 = new TreeNode(10);
+    let node7 = new TreeNode(7);
+    node15.parent = node;
+    node25.parent = node;
+    node10.parent = node15
+    node7.parent = node10;
+
+    node.left = node15;
+    node.right = node25;
+    node.left.left = node10;
+    node.left.left.left = node7;
+
+    node.left.side = 'left';
+    node.right.side = 'right';
+    node.left.left.side = 'left';
+    node.left.left.left.side = 'left';
+
+    it("the left child and right child should not change if nothing is passed in", () =>{
+        expect(node.left.val).to.equal(15);
+        expect(node.right.val).to.equal(25);
+    });
+
+    it("the left child of the node should become the left left child", () =>{
+        leftLeftRotation(node15);
+        expect(node.left.val).to.equal(10);
+    });
+    
+    it("the left left child's parent should become the node's parent passed in", () => {
+        expect(node.left.parent.side).to.equal(null);
+    });
+
+    it("the node rotated to the right should have the left pointer updated to null", () => {
+        expect(node.left.right.left).to.equal(null);
+    })
+})
