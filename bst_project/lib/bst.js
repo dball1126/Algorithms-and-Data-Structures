@@ -1,3 +1,4 @@
+const { node_height } = require('./node_height');
 class TreeNode {
     constructor(val) {
         this.val = val;
@@ -55,6 +56,14 @@ class BST {
     }
 
 }
+
+
+
+
+
+
+
+
 
 module.exports = {
     TreeNode,
