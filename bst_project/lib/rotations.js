@@ -21,30 +21,44 @@ function leftLeftRotation(node) {
     oldParent.left = null;
 }
 
+function rightRightRotation(node) {
+    if (!node) return null;
+
+    let oldParent = node;
+    let newParent = node.right;
+    newParent.parent = oldParent.parent;
+
+    node.parent.right = newParent;
+    newParent.left = oldParent;
+    oldParent.parent = newParent
+    oldParent.side = 'left';
+    oldParent.right = null;
+}
+
 let node = new TreeNode(20);
 let node15 = new TreeNode(15);
 let node25 = new TreeNode(25);
-let node10 = new TreeNode(10);
-let node7 = new TreeNode(7);
+let node30 = new TreeNode(30);
+let node32 = new TreeNode(32);
 node15.parent = node;
 node25.parent = node;
-node10.parent = node15
-node7.parent = node10;
+node30.parent = node25
+node32.parent = node30;
 
 node.left = node15;
 node.right = node25;
-node.left.left = node10;
-node.left.left.left = node7;
+node.right.right = node30;
+node.right.right.right = node32;
 
-node.left.side = 'left';
 node.right.side = 'right';
-node.left.left.side = 'left';
-node.left.left.left.side = 'left';
-
-console.log(leftLeftRotation(node15))
+node.left.side = 'left';
+node.right.right.side = 'right';
+node.right.right.right.side = 'right';
+rightRightRotation(node25)
 console.log(node)
 
 
 module.exports = {
-    leftLeftRotation
+    leftLeftRotation,
+    rightRightRotation
 }
