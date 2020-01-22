@@ -58,69 +58,59 @@
 // TODO: Implement the LRUCacheItem class zz
 class LRUCacheItem {
   constructor(val, key) {
-    this.key = key || null;
-    this.val = val || null;
-    this.node = null;
+   this.val = val;
+   this.key = key;
+   this.node = null;
   }
 }
 
 // TODO: Implement the LRUCacheItem class here
 class LRUCache {
   constructor(limit) {
-    this.items = {};
-    this.ordering = new List();
-    this.limit = limit;
     this.length = 0;
+    this.ordering = new List();
+    this.items = {};
+    this.limit = limit;
   }
 
   // TODO: Implement the size method here
   size() {
-   return this.length;
+    return this.length;
   }
 
   // TODO: Implement the get method here
   get(key) {
-   if (!this.items[key]) return null;
-
-   const item = this.items[key];
-   this.promote(item);
-   return item.val;
+ 
   }
 
   // TODO: Implement the set method here
   set(key, val) {
-    let item;
     // Set an existing item
-    if (this.items[key]) {
-      item = this.items[key];
-      item.val = val;
-      this.promote(item);
+    if(key in this.items) return this.items[key] = val;
 
       // Set a new item
-    } else {
+    let item = new LRUCacheItem(key, val);
       // Make space if necessary
-      if (this.isFull()) this.prune();
+    if(this.length === limit){
+      
+    } else {
+      this.length++
 
-      item = new LRUCacheItem(val, key);
-      item.node = this.ordering.unshift(item);
-      this.items[key] = item;
-      this.length += 1;
     }
+    
    
   }
 
   isFull() {
-   return this.length >= this.limit;
+    return this.length === this.limit
   }
 
   prune() {
-   let item = this.ordering.pop();
-   delete this.items[item.key];
-   this.length = Math.max(0, this.length-1)
+  
   }
 
   promote(item) {
-   this.ordering.moveToFront(item.node)
+  
   }
 }
 

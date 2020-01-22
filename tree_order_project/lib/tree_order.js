@@ -19,6 +19,7 @@ function preOrderArray(root) {
   if (!root) return [];
   let arr = [];
   arr.push(root.val, ...preOrderArray(root.left), ...preOrderArray(root.right));
+  return arr;
 }
 
 

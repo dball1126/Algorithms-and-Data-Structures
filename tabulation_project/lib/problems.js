@@ -88,7 +88,7 @@ function minChange(coins, amount) {
             }
         }
     });
-
+    //[1 2 3 4 5 6 7 8 9 10 11 12]  N-1                             2* i   2 * i+1
     return table[table.length - 1];
 }
 

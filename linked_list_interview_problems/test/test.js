@@ -1,9 +1,9 @@
+const { expect } = require('chai');
 const { reverseLinkedList } = require('../lib/1_reverse_linked_list.js');
 const { stringify, linkedListIntersection } = require('../lib/2_linked_list_intersection.js');
 const { LinkedList, hasCycle } = require('../lib/3_linked_list_cycles.js');
 const { List, ListNode, LRUCache, LRUCacheItem } = require('../lib/4_lru_cache.js');
 
-const { expect } = require('chai');
 
 describe('Problem 1: reverseLinkedList', () => {
     let linkedList;

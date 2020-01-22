@@ -119,16 +119,16 @@ class LinkedList {
 
     // TODO: Implement the get method here
     get(index) {
-       if (index < 0 || index >= this.length) return null;
-        if (!this.head) return undefined;
-        let count = 0;
-        let current = this.head;
-        while (current) {
-            if (count === index) return current;
-            count++;
-            current = current.next
-        }
-        return undefined;
+      if (index < 0 || index > this.length) return null;
+      if (!this.head) return null;
+      let count = 0;
+      let current = this.head;
+      while (current) {
+        if (index === count) return current;
+        current = current.next;
+        count++;
+      }
+      return null;
     }
 
     // TODO: Implement the set method here
