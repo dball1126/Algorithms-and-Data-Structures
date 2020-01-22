@@ -3,7 +3,7 @@ chai.use(require('chai-spies'));
 const { expect, spy } = chai;
 const { nodeHeight} = require('../lib/node_height');
 const { TreeNode, BST } = require('../lib/bst');
-const {leftLeftRotation, rightRightRotation} = require('../lib/rotations');
+const {leftLeftRotation, rightRightRotation, leftRightRotation} = require('../lib/rotations');
 
 describe('BST', () => {
     describe('#constructor()', () => {
@@ -222,6 +222,7 @@ describe('leftLeftRotation(node)', () => {
         expect(node.left.right.left).to.equal(null);
     })
 })
+
 describe('rightRightRotation(node)', () => {
     let node = new TreeNode(20);
 let node15 = new TreeNode(15);
@@ -259,5 +260,55 @@ node.right.right.right.side = 'right';
 
     it("the node rotated to the left should have the right pointer updated to null", () => {
         expect(node.right.left.right).to.equal(null);
+    })
+})
+
+describe('leftRightRotation(node)', () => {
+    let node = new TreeNode(20);
+    let node15 = new TreeNode(15);
+    let node25 = new TreeNode(25);
+    let node10 = new TreeNode(10);
+    let node14 = new TreeNode(14);
+    node15.parent = node;
+    node25.parent = node;
+    node10.parent = node15
+    node14.parent = node10;
+
+    node.left = node15;
+    node.right = node25;
+    node.left.left = node10;
+    node.left.left.right = node14;
+
+    node.left.side = 'left';
+    node.right.side = 'right';
+    node.left.left.side = 'left';
+    node.left.left.right.side = 'right';
+
+    it("the left child and right child should not change if nothing is passed in", () =>{
+        expect(node.left.val).to.equal(15);
+        expect(node.right.val).to.equal(25);
+    });
+
+    it("the parent node of the node passed should switch places with the node", () =>{
+       leftRightRotation(node10);
+        expect(node.left.left.val).to.equal(10);
+        expect(node.left.val).to.equal(14);
+    });
+    
+    it("the right child and side of the node passed to be null", () => {
+        expect(node.left.left.right).to.equal(null);
+        
+    });
+
+    it("the parent of the node passed in should be updated to a different node", () => {
+        expect(node.left.left.parent.val).to.equal(14);
+    })
+
+    it("expect the right child of the node passed in to have have the node's parent as it's right child", () => {
+        expect(node.left.right.val).to.equal(15);
+    })
+
+    it("expect the right child of the node passed in to switch over to the left side", () => {
+        expect(node.left.side).to.equal('left')
     })
 })
